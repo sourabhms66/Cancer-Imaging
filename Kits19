@@ -324,3 +324,6 @@ def nii_tfm(fn,wins):
   return slices
 
 
+test_files = nii_tfm(final_df.loc[tst,'dirname_input']+"/"+final_df.loc[tst,'filename'],[dicom_windows.liver, dicom_windows.custom])
+
+
