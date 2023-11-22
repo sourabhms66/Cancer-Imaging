@@ -298,3 +298,11 @@ def nii_tfm(fn,wins):
   return slices
 
 
+tst = 25
+test_nii = read_nii(final_df.loc[tst,'dirname_input']+"/"+final_df.loc[tst,'filename'])
+test_mask = read_nii(final_df.loc[tst,'dirname_segmentation']+"/"+final_df.loc[tst,'filename_seg'])
+test_slice_idx = 45
+sample_slice = tensor(vis_im(test_nii[...,test_slice_idx]).astype(np.float32))
+plot_sample([vis_im(test_nii[...,test_slice_idx]), vis_im(test_mask[...,test_slice_idx])])
+
+
