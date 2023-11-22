@@ -239,3 +239,13 @@ db = DataBlock(blocks=(ImageBlock(),MaskBlock(codes)), # codes = {"background": 
 ds = db.datasets(source=path/'train_images')
 
 
+idx = 50
+imgs = [ds[idx][0],ds[idx][1]]
+fig, axs = plt.subplots(1, 2)
+
+for i,ax in enumerate(axs.flatten()):
+    ax.axis('off')
+    ax.imshow((imgs[i]))
+plt.show()
+
+
