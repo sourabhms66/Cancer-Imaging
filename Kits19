@@ -269,3 +269,6 @@ learn = unet_learner(dls,resnet18,loss_func=CrossEntropyLossFlat(axis=1))
 learn.fine_tune(50, wd=0.1, cbs=SaveModelCallback())
 
 
+learn.show_results()
+
+
