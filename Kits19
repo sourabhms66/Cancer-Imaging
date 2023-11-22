@@ -286,3 +286,15 @@ if (GENERATE_JPG_FILES):
   learn0.dls.transform = tfms
 
 
+
+def nii_tfm(fn,wins):
+  test_nii = read_nii(fn)
+  curr_dim = test_nii.shape[2] #  512, 512, curr_dim
+  slices = []
+  for curr_slice in range(curr_dim):
+    data = tensor(test_nii[...,curr_slice].astype(np.float32))
+    data = (data.to_nchan(wins)*255).byte()
+    slices.append(TensorImage(data))
+  return slices
+
+
