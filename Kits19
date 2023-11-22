@@ -249,3 +249,6 @@ for i,ax in enumerate(axs.flatten()):
 plt.show()
 
 
+np.unique(array(ds[idx][1]))
+
+
