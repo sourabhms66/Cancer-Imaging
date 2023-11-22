@@ -68,3 +68,32 @@ def vis_im(array_):
 # i_m=np.rot90(np.array(sample_ct[...,45]))
 # sample_ct[...,45].shape
 
+# preprocessing the .nill files
+# source https://docs.fast.ai/medical.imaging
+dicom_windows = types.SimpleNamespace(
+    brain=(80,40),
+    subdural=(254,100),
+    stroke=(8,32),
+    brain_bone=(2800,600),
+    brain_soft=(375,40),
+    lungs=(1500,-600),
+    mediastinum=(350,50),
+    abdomen_soft=(400,50),
+    liver=(150,30),
+    spine_soft=(250,50),
+    spine_bone=(1800,400),
+    custom=(200,60)
+    )
+@patch
+def windowed(self:Tensor, w, l):
+    px = self.clone()
+    px_min= l - w//2
+    px_max= l + w//2
+    px[px<px_min] = px_min
+    px[px>px_max] = px_max
+    return (px-px_min)/(px_max-px_min)
+
+figure(figsize=(8,6), dpi=100)
+plt.imshow(tensor(vis_im(sample_ct[...,45]).astype(np.float32)).windowed(*dicom_windows.custom),cmap=plt.cm.bone);
+plt.show()
+
