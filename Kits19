@@ -260,3 +260,6 @@ dls = db.dataloaders(path/'train_images',bs = BATCH_SIZE) #, num_workers=0
 dls.show_batch()
 
 
+from torchsummary import summary
+
+
