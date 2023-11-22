@@ -306,3 +306,7 @@ sample_slice = tensor(vis_im(test_nii[...,test_slice_idx]).astype(np.float32))
 plot_sample([vis_im(test_nii[...,test_slice_idx]), vis_im(test_mask[...,test_slice_idx])])
 
 
+for test_slice_idx in range(0,92):
+  plot_sample([vis_im(test_nii[...,test_slice_idx]), vis_im(test_mask[...,test_slice_idx])])
+
+
