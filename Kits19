@@ -276,3 +276,13 @@ interp = SegmentationInterpretation.from_learner(learn)
 interp.plot_top_losses(k=50)
 
 
+learn.export(path/f'kidney_segmentation')
+
+
+# loading the save model
+if (GENERATE_JPG_FILES):
+  tfms = [Resize(IMAGE_SIZE), IntToFloatTensor(), Normalize()]
+  learn0 = load_learner(path/f'kidney_segmentation', cpu=False)
+  learn0.dls.transform = tfms
+
+
