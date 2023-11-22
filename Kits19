@@ -256,3 +256,7 @@ unique, counts = np.unique(array(ds[idx][1]), return_counts=True)
 print(np.array((unique, counts)).T)
 
 
+dls = db.dataloaders(path/'train_images',bs = BATCH_SIZE) #, num_workers=0
+dls.show_batch()
+
+
