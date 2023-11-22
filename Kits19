@@ -272,3 +272,7 @@ learn.fine_tune(50, wd=0.1, cbs=SaveModelCallback())
 learn.show_results()
 
 
+interp = SegmentationInterpretation.from_learner(learn)
+interp.plot_top_losses(k=50)
+
+
