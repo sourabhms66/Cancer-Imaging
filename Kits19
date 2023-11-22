@@ -133,3 +133,9 @@ plot_sample([vis_im(sample_ct[...,sample]),
 
 sample_slice.contiguous().view(-1)
 
+# check the mask value
+mask = Image.fromarray(sample_mask[...,sample].astype('uint8'),mode="L")
+unique, counts = np.unique(mask, return_counts=True)
+print(np.array((unique, counts)).T)
+
+
