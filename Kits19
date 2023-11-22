@@ -327,3 +327,9 @@ def nii_tfm(fn,wins):
 test_files = nii_tfm(final_df.loc[tst,'dirname_input']+"/"+final_df.loc[tst,'filename'],[dicom_windows.liver, dicom_windows.custom])
 
 
+# getting the prediction for a test file
+test_dl = learn0.dls.test_dl(test_files)
+preds, y = learn0.get_preds(dl=test_dl)
+predicted_mask = np.argmax(preds, axis=1)
+
+
