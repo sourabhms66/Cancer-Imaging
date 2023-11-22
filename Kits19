@@ -123,3 +123,10 @@ def plot_sample(array_list, color_map='nipy_spectral'):
     plt.axis('off')
 #   plt.show()
 
+sample = 280
+# for sample in range (1,49):
+sample_slice = tensor(vis_im(sample_ct[...,sample]).astype(np.float32))
+
+plot_sample([vis_im(sample_ct[...,sample]),
+             vis_im(sample_mask[...,sample])])
+
