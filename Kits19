@@ -1,0 +1,70 @@
+import os
+import glob
+import cv2
+import imageio
+%matplotlib inline
+import numpy as np
+import pandas as pd
+import nibabel as nib
+import matplotlib.pyplot as plt
+from tqdm.notebook import tqdm
+from ipywidgets import *
+from PIL import Image
+from matplotlib.pyplot import figure
+from fastai.basics import *
+from fastai.vision.all import *
+from fastai.data.transforms import *
+
+# Create lists to store file pairs
+file_list_input = []
+segmented_file = []
+
+# Iterate through the dataset directory
+for dirname, _, filenames in os.walk('data'):
+    # Filter imaging files
+    imaging_files = [filename for filename in filenames if 'imaging' in filename]
+
+    # Iterate through imaging files
+    for imaging_file in imaging_files:
+        # Generate the corresponding segmentation filename
+        segmentation_file = imaging_file.replace('imaging', 'segmentation')
+
+        # Check if the segmentation file exists
+        if segmentation_file in filenames:
+            file_list_input.append((dirname, imaging_file))
+            segmented_file.append((dirname, segmentation_file))
+
+# Create dataframes
+df_files_imaging = pd.DataFrame(file_list_input, columns=['dirname_input', 'filename'])
+df_files_segmentation = pd.DataFrame(segmented_file, columns=['dirname_segmentation', 'filename_seg'])
+
+# Print columns of both dataframes
+print("Columns of df_files_imaging:", df_files_imaging.columns)
+print("Columns of df_files_segmentation:", df_files_segmentation.columns)
+
+# Merge dataframes on the 'dirname_input' column
+final_df = pd.merge(df_files_imaging, df_files_segmentation, left_on='dirname_input', right_on='dirname_segmentation')
+
+# Display the first few rows of the dataframe
+final_df.head()
+
+# reading .nii files and returns pixel array
+def read_nii(filepath):
+    ct_scan = nib.load(filepath)
+    array = ct_scan.get_fdata()
+    array = np.rot90(np.array(array),k=1,axes=(0,2))
+# array = np.rot90(np.array(array))
+    return (array)
+
+#read sample
+sample = 13
+# for sample in range(0,23):
+sample_ct = read_nii(final_df.loc[sample,'dirname_input']+"/"+final_df.loc[sample,'filename'])
+sample_mask = read_nii(final_df.loc[sample,'dirname_segmentation']+"/"+final_df.loc[sample,'filename_seg'])
+print(f'CT Shape:   {sample_ct.shape}\nMask Shape:   {sample_mask.shape}')
+def vis_im(array_):
+    array =np.rot90(np.array(array_),k=-1)
+    return(array)
+# i_m=np.rot90(np.array(sample_ct[...,45]))
+# sample_ct[...,45].shape
+
