@@ -310,3 +310,17 @@ for test_slice_idx in range(0,92):
   plot_sample([vis_im(test_nii[...,test_slice_idx]), vis_im(test_mask[...,test_slice_idx])])
 
 
+# preparing a nii test file for prediction
+def nii_tfm(fn,wins):
+  test_nii = read_nii(fn)
+  curr_dim = test_nii.shape[2] #  512, 512, curr_dim
+  print(curr_dim)
+  slices = []
+
+  for curr_slice in range(curr_dim):
+    data = tensor(vis_im(test_nii[...,curr_slice]).astype(np.float32))
+    data = (data.to_nchan(wins)*255).byte()
+    slices.append(TensorImage(data))
+  return slices
+
+
