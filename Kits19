@@ -350,3 +350,10 @@ def plot_sample_p(array_list, color_map='nipy_spectral'):
     plt.axis('off')
 
 
+predicted_mask[i].shape
+
+
+for i in range(0,92):
+  plot_sample_p([predicted_mask[i],vis_im(test_mask[...,i])])
+
+
