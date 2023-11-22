@@ -130,3 +130,6 @@ sample_slice = tensor(vis_im(sample_ct[...,sample]).astype(np.float32))
 plot_sample([vis_im(sample_ct[...,sample]),
              vis_im(sample_mask[...,sample])])
 
+
+sample_slice.contiguous().view(-1)
+
