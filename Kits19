@@ -97,3 +97,29 @@ figure(figsize=(8,6), dpi=100)
 plt.imshow(tensor(vis_im(sample_ct[...,45]).astype(np.float32)).windowed(*dicom_windows.custom),cmap=plt.cm.bone);
 plt.show()
 
+# plot and a slice of the mri with all available annotations
+def plot_sample(array_list, color_map='nipy_spectral'):
+    fig = plt.figure(figsize=(20,16), dpi=100)
+
+    plt.subplot(1,4,1)
+    plt.imshow(array_list[0], cmap='bone')
+    plt.title('Original Image')
+    plt.axis('off')
+
+    plt.subplot(1,4,2)
+    plt.imshow(tensor(array_list[0].astype(np.float32)).windowed(*dicom_windows.custom), cmap='bone');
+    plt.title('Windowed Image')
+    plt.axis('off')
+
+    plt.subplot(1,4,3)
+    plt.imshow(array_list[1],alpha=0.5, cmap=color_map)
+    plt.title('Mask')
+    plt.axis('off')
+
+    plt.subplot(1,4,4)
+    plt.imshow(array_list[0], cmap='bone')
+    plt.imshow(array_list[1],alpha=0.5, cmap=color_map)
+    plt.title('KId & Mask')
+    plt.axis('off')
+#   plt.show()
+
