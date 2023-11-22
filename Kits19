@@ -252,3 +252,7 @@ plt.show()
 np.unique(array(ds[idx][1]))
 
 
+unique, counts = np.unique(array(ds[idx][1]), return_counts=True)
+print(np.array((unique, counts)).T)
+
+
