@@ -189,3 +189,31 @@ show_image(Image.open('test.jpg'), ax=axs[0])
 plt.show()
 
 
+import os
+from pathlib import Path
+from tqdm import tqdm
+
+# making custom jpg files for unet training
+# total number of files....
+GENERATE_JPG_FILES = True
+# if (GENERATE_JPG_FILES):
+
+# sample_ct = read_nii(final_df.loc[sample,'dirname_input']+"/"+final_df.loc[sample,'filename'])
+# sample_mask = read_nii(final_df.loc[sample,'dirname_segmentation']+"/"+final_df.loc[sample,'filename_seg'])
+path = Path(".")
+
+os.makedirs('train_images',exist_ok=True)
+os.makedirs('train_masks',exist_ok=True)
+
+for ii in tqdm(range(0,len(final_df),3)): # take 1/3 of nii files for training
+    curr_ct = read_nii(final_df.loc[ii,'dirname_input']+"/"+final_df.loc[ii,'filename'])
+    curr_mask = read_nii(final_df.loc[ii,'dirname_segmentation']+"/"+final_df.loc[ii,'filename_seg'])
+    curr_file_name = str(final_df.loc[ii,'filename']).split('.')[0]
+    curr_dim = curr_ct.shape[2] # 512, 512, curr_dim
+    for curr_slice in range(0, curr_dim, 2): # export second slice for training
+        data = tensor(vis_im(curr_ct[...,curr_slice]).astype(np.float32))
+        mask = Image.fromarray(vis_im(curr_mask[...,curr_slice]).astype('uint8'), mode="L")
+        data.save_jpg(f"train_images/{curr_file_name}_slice_{curr_slice}.jpg", [dicom_windows.liver,dicom_windows.custom])
+        mask.save(f"train_masks/{curr_file_name}_slice_{curr_slice}_mask.png")
+
+
