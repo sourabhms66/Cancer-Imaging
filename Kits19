@@ -333,3 +333,20 @@ preds, y = learn0.get_preds(dl=test_dl)
 predicted_mask = np.argmax(preds, axis=1)
 
 
+predicted_mask.shape
+
+
+def plot_sample_p(array_list, color_map='nipy_spectral'):
+    fig = plt.figure(figsize=(20,16), dpi=100)
+
+    plt.subplot(1,4,1)
+    plt.imshow(array_list[0], cmap='bone')
+    plt.title('Predicted Image')
+    plt.axis('off')
+
+    plt.subplot(1,4,2)
+    plt.imshow(array_list[1], cmap='bone');
+    plt.title('Original Image')
+    plt.axis('off')
+
+
